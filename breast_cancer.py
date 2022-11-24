@@ -122,7 +122,6 @@ with modeling:
 
     naive_bayes_accuracy = round(100 * accuracy_score(y_test, Y_pred_nb), 2)
     decision_tree_accuracy = round(100* metrics.accuracy_score(y_test, Y_pred_dt))
-    model_accuracy['Gaussian Naive Bayes'] = naive_bayes_accuracy
     bagging_Dc = round(100 * accuracy_score(y_test, tree), 2)
     knn_accuracy = round(100 * accuracy_score(y_test, Y_pred_knn), 2)
     
