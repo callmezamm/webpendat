@@ -141,6 +141,18 @@ with modeling:
     if knn_cb:
         st.write('Akurasi Metode KNN {} %.'.format(knn_accuracy))
 
+    if naive_bayes_accuracy > decision_tree_accuracy and naive_bayes_accuracy > bagging_Dc and naive_bayes_accuracy > knn_accuracy:
+        hasil_tinggi = naive_bayes_classifier
+        metode = "Naive Bayes"
+    elif decision_tree_accuracy > naive_bayes_accuracy and decision_tree_accuracy > bagging_Dc and decision_tree_accuracy > knn_accuracy:
+        hasil_tinggi = clf_dt
+        metode = "Decision Tree"
+    elif bagging_Dc > naive_bayes_accuracy and bagging_Dc > decision_tree_accuracy and bagging_Dc > knn_accuracy:
+        hasil_tinggi = clf
+        metode = "Esamble Bagging Decision Tree"
+    else:
+        hasil_tinggi = knn
+        metode = "K-Nearest Neighboor"
 
 with implementation:
     st.write("# IMPLEMENTATION")
@@ -155,7 +167,7 @@ with implementation:
     concave_point_mean = st.number_input("Masukkan rata-rata concave point (0 - 0.2)", min_value=0.0, max_value=0.2)
 
     st.write("Cek apakah kanker masuk kategori jinak atau ganas")
-    cek_bagging_tree = st.button('Cek Kanker')
+    cek = st.button('Cek Kanker')
     inputan = [[radius_mean, texture_mean, perimeter_mean, area_mean, smoothness_mean, compactness_mean, concative_mean, concave_point_mean]]
 
     scaler_jl = joblib.load('normal')
@@ -163,13 +175,12 @@ with implementation:
     inputan_normal = scaler.transform(inputan)
 
     FIRST_IDX = 0
-    bagging_decision_tree = joblib.load("bagging_decisionT")
-    if cek_bagging_tree:
-        hasil_test = bagging_decision_tree.predict(inputan_normal)[FIRST_IDX]
+    if cek:
+        hasil_test = hasil_tinggi.predict(inputan_normal)[FIRST_IDX]
         if hasil_test == 0:
-            st.write("Nama Customer ", nama_pasien , "Mengidap Kanker Payudara Banign/jinak Berdasarkan Model bagging decision tree")
+            st.write("Nama Customer ", nama_pasien , "Mengidap Kanker Payudara Banign/jinak Berdasarkan Model", metode)
         else:
-            st.write("Nama Customer ", nama_pasien , "Mengidap Kanker Payudara Malignant/Ganas Berdasarkan Model bagging decision tree")
+            st.write("Nama Customer ", nama_pasien , "Mengidap Kanker Payudara Malignant/Ganas Berdasarkan Model", metode)
 
 with evaluation:
     st.write("# EVALUATION")
