@@ -22,6 +22,7 @@ Oleh Muhamad Nizamudin | 200411100193
 """)
 
 import_data, preprocessing, modeling, implementation, evaluation = st.tabs(["Import Data", "Pre Processing", "Modeling", "Implementation", "Evaluation"])
+st.write("Link data set https://drive.google.com/file/d/1okNoCVe93uA171t3q-1v-p59LCVABuMe/view?usp=sharing")
 
 with import_data:
     st.write("# IMPORT DATA")
